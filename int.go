@@ -17,31 +17,38 @@ const (
 	MinInt56 = -1 << 55  // -2147483648
 )
 
+// ReadInt64 ...
 func ReadInt64(b []byte) int64 {
 	return int64(b[0]) | int64(b[1])<<8 | int64(b[2])<<16 | int64(b[3])<<24 |
 		int64(b[4])<<32 | int64(b[5])<<40 | int64(b[6])<<48 | int64(b[7])<<56
 }
 
+// ReadInt32 ...
 func ReadInt32(b []byte) int32 {
 	return int32(b[0]) | int32(b[1])<<8 | int32(b[2])<<16 | int32(b[3])<<24
 }
 
+// ReadInt16 ...
 func ReadInt16(b []byte) int16 {
 	return int16(b[0]) | int16(b[1])<<8
 }
 
+// WriteInt64 ...
 func WriteInt64(b []byte, i int64) {
 	b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7] = byte(i), byte(i>>8), byte(i>>16), byte(i>>24), byte(i>>32), byte(i>>40), byte(i>>48), byte(i>>56)
 }
 
+// WriteInt32 ...
 func WriteInt32(b []byte, i int32) {
 	b[0], b[1], b[2], b[3] = byte(i), byte(i>>8), byte(i>>16), byte(i>>24)
 }
 
+// WriteInt16 ...
 func WriteInt16(b []byte, i int16) {
 	b[0], b[1] = byte(i), byte(i>>8)
 }
 
+// LenInt ...
 func LenInt(i int) int {
 	if i == 0 {
 		return 0
@@ -78,6 +85,7 @@ func LenInt(i int) int {
 	return 1
 }
 
+// WriteInt ...
 func WriteInt(b []byte, i int, length int) {
 	b[0] = byte(length)
 	switch length {
@@ -128,10 +136,11 @@ func WriteInt(b []byte, i int, length int) {
 	}
 }
 
+// ReadInt ...
 func ReadInt(b []byte) (i int, length int) {
 	switch b[0] {
 	case 1:
-		return int(b[1]), 2
+		return int(int8(b[1])), 2
 	case 2:
 		return int(ReadInt16(b)), 3
 	case 3:
@@ -147,7 +156,8 @@ func ReadInt(b []byte) (i int, length int) {
 		return int(b[0]) | int(b[1])<<8 | int(b[2])<<16 | int(b[3])<<24 |
 			int(b[4])<<32 | int(b[5])<<40 | int(b[6])<<48, 8
 	case 8:
-		return int(ReadInt64(b)), 9
+		return int(b[0]) | int(b[1])<<8 | int(b[2])<<16 | int(b[3])<<24 |
+			int(b[4])<<32 | int(b[5])<<40 | int(b[6])<<48 | int(b[7])<<56, 9
 	}
 	return
 }
