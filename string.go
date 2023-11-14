@@ -76,14 +76,14 @@ func ReadStringPtr(b []byte, h *string) (size int, _ bool) {
 	return size, true
 }
 
-// Deprecated
+/*// Deprecated
 func WriteStringOld(b []byte, index int, s *string) int {
 	l := len(*s)
 	b[index] = byte(l) // Set how long the string is
 	index++
 	copy(b[index:], *s)
 	return index + l
-}
+}*/
 
 // Deprecated
 // WriteString expects b to be the start of a byte slice.
@@ -99,7 +99,7 @@ func WriteString(b []byte, s string) (l int) {
 	return l + 1
 }
 
-// Deprecated
+/*// Deprecated
 func WriteStringX(b []byte, s string, l int) {
 	b[0] = byte(l) // Set how long the string is
 	//index++
@@ -107,4 +107,4 @@ func WriteStringX(b []byte, s string, l int) {
 		copy(b[1:], s)
 	}
 	//return l + 1
-}
+}*/
