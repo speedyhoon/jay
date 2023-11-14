@@ -13,7 +13,7 @@ func main() {
 		Sequential:   true,
 		Automatic:    false,
 		Model:        "H23w",
-		Manufacturer: "Hewland",
+		Manufacturer: "Zebra",
 	}}
 	//byt, _ := json.Marshal(car)
 	//log.Printf("%s\n", byt)

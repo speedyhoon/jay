@@ -41,4 +41,3 @@ for i := 0; i < structType.NumField(); i++ {
 }*/
 
 //return
-//}
