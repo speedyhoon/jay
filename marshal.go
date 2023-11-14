@@ -115,12 +115,12 @@ func generateLine(f field, index *uint, receiver, at string /*, isLast bool*/) s
 	return false
 }*/
 
-func marshalU64(f *field) (fun string, sizeOf uint, ok bool) {
+/*func marshalU64(f *field) (fun string, sizeOf uint, ok bool) {
 	if f.Options.maxBytes != 0 {
 		return fmt.Sprintf("WriteUint%dBytes", f.Options.maxBytes*8), f.Options.maxBytes, true
 	}
 	return "", 0, false
-}
+}*/
 
 func (f *field) LoadTagOptions() {
 	f.tag = strings.TrimSpace(f.tag)
