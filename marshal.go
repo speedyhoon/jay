@@ -39,7 +39,7 @@ func (s Struct) MakeMarshalJTo(b *bytes.Buffer) {
 		//	isLast = i >= len(s.fixedLen)-1
 		//}
 
-		//if lookupMarshaler(&f) {
+		//if lookupMarshaller(&f) {
 		//	continue
 		//}
 
@@ -152,31 +152,31 @@ func (f *field) LoadTagOptions() {
 }
 
 func byteSize(v uint) uint {
-	if v <= 1<<8-1 {
+	if v == 0 {
+		return 0
+	}
+	if v <= MaxUint8 {
 		return 1
 	}
-	if v <= 1<<16-1 {
+	if v <= MaxUint16 {
 		return 2
 	}
-	if v <= 1<<24-1 {
+	if v <= MaxUint24 {
 		return 3
 	}
-	if v <= 1<<32-1 {
+	if v <= MaxUint32 {
 		return 4
 	}
-	if v <= 1<<40-1 {
+	if v <= MaxUint40 {
 		return 5
 	}
-	if v <= 1<<48-1 {
+	if v <= MaxUint48 {
 		return 6
 	}
-	if v <= 1<<56-1 {
+	if v <= MaxUint56 {
 		return 7
 	}
-	if v <= 1<<64-1 {
-		return 8
-	}
-	return 0
+	return 8
 }
 
 const (
