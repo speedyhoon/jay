@@ -220,7 +220,7 @@ func typeFuncs(typ string) string {
 	case "string":
 		return "WriteString"
 	case "uint64":
-		return "WriteUint64Bytes"
+		return "WriteUint64"
 	case "int":
 		return "WriteInt"
 	default:
@@ -242,7 +242,7 @@ func (e *Event) MarshalZTo(buf []byte) {
 	buf[1] = WriteEnum44(e.Enum1, e.Enum2)
 
 	at := 10
-	WriteUint64Bytes(buf[1:at], e.ID) // 0-7
+	WriteUint64(buf[1:at], e.ID) // 0-7
 	at = WriteString(buf, at, &e.Name)
 	at = WriteString(buf, at, &e.CC)
 	WriteString(buf, at, &e.Timing)

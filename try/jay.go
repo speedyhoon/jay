@@ -10,12 +10,12 @@ func (c *Car) MarshalK() (b []byte) {
 	l1, l2, l3 := len(c.Name)+1, len(c.CC)+1, len(c.Timing)+1
 	l4 := jay.LenUint(c.Row)
 	//b = make([]byte, 21 + l1+l2+l3+int(l4))
-	b = make([]byte, 9+ l1+l2+l3+int(l4))
+	b = make([]byte, 9+l1+l2+l3+int(l4))
 	//l3 = 1 + 8 + 9 + l1+1 + l2+1 + l3+1
 	b[0] = jay.Bool1(c.Auto)
-	jay.WriteUint64Bytes(b[1:9], c.ID)
-	at := int(9+l4)
-	jay.WriteUintBytes(b[9:at], c.Row, l4)
+	jay.WriteUint64(b[1:9], c.ID)
+	at := int(9 + l4)
+	jay.WriteUint(b[9:at], c.Row, l4)
 
 	///*at +=*/ jay.WriteStringX(b[at:at+l1], c.Name, l1)
 	//at += l1
@@ -27,38 +27,35 @@ func (c *Car) MarshalK() (b []byte) {
 	if l1 != 0 {
 		copy(b[at:at+l1], c.Name)
 	}
-	at += l1-1
+	at += l1 - 1
 
 	b[at] = byte(l2)
 	at++
 	if l2 != 0 {
 		copy(b[at:at+l2], c.CC)
 	}
-	at += l2-1
+	at += l2 - 1
 	//jay.WriteStringX(b[at:at+l2], c.CC, l2)
-
 
 	b[at] = byte(l3)
 	at++
 	if l3 != 0 {
-	//	copy(b[at:at+l3], c.Timing)
+		//	copy(b[at:at+l3], c.Timing)
 		copy(b[at:], c.Timing)
 	}
 	//jay.WriteStringX(b[at:], c.Timing, l3)
 
-
 	return
 }
-
 
 func (c *Car) MarshalL() (b []byte) {
 	l1, l2, l3 := len(c.Name)+1, len(c.CC)+1, len(c.Timing)+1
 	//l4 := jay.LenUint(c.Row)
 	//b = make([]byte, 21 + l1+l2+l3+int(l4))
-	b = make([]byte, 17+ l1+l2+l3)//+int(l4))
+	b = make([]byte, 17+l1+l2+l3) //+int(l4))
 	//l3 = 1 + 8 + 9 + l1+1 + l2+1 + l3+1
 	b[0] = jay.Bool1(c.Auto)
-	//jay.WriteUint64Bytes(b[1:9], c.ID)
+	//jay.WriteUint64(b[1:9], c.ID)
 	//at := int(9+l4)
 	//at := 17
 	//jay.WriteUintBytesXX(b[9:at], c.Row)
@@ -84,8 +81,6 @@ func (c *Car) MarshalL() (b []byte) {
 	//b[15] = byte(c.Row >> 48)
 	//b[16] = byte(c.Row >> 56)
 
-
-
 	///*at +=*/ jay.WriteStringX(b[at:at+l1], c.Name, l1)
 	//at += l1
 	///*at +=*/ jay.WriteStringX(b[at:at+l2], c.CC, l2)
@@ -96,25 +91,23 @@ func (c *Car) MarshalL() (b []byte) {
 	if l1 != 0 {
 		copy(b[18:18+l1], c.Name)
 	}
-	at := 18+l1-1
+	at := 18 + l1 - 1
 
 	b[at] = byte(l2)
 	at++
 	if l2 != 0 {
 		copy(b[at:at+l2], c.CC)
 	}
-	at += l2-1
+	at += l2 - 1
 	//jay.WriteStringX(b[at:at+l2], c.CC, l2)
-
 
 	b[at] = byte(l3)
 	at++
 	if l3 != 0 {
-	//	copy(b[at:at+l3], c.Timing)
+		//	copy(b[at:at+l3], c.Timing)
 		copy(b[at:], c.Timing)
 	}
 	//jay.WriteStringX(b[at:], c.Timing, l3)
-
 
 	return
 }
@@ -141,9 +134,9 @@ func (c *Car) MarshalJ2() (b []byte) {
 }
 
 func (c *Car) MarshalJTo(b []byte) {
-	jay.WriteUint64Bytes(b[:8], c.ID)
+	jay.WriteUint64(b[:8], c.ID)
 	b[8] = jay.Bool1(c.Auto)
-	at := 9+jay.WriteUintBytesDEPRECATED(b[9:18], c.Row)
+	at := 9 + jay.WriteUintBytesDEPRECATED(b[9:18], c.Row)
 	at += jay.WriteString(b[17:], c.Name)
 	at += jay.WriteString(b[at:], c.CC)
 	at += jay.WriteString(b[at:], c.Timing)
@@ -202,7 +195,7 @@ func (g *Gearbox) SizeJ() int {
 }
 
 func (g *Gearbox) UnmarshalJ(b []byte) error {
-	if len(b) <= 13 {	// TODO Hardcode fixed size length + SizeJ of children structs.
+	if len(b) <= 13 { // TODO Hardcode fixed size length + SizeJ of children structs.
 		return jay.ErrUnexpectedEOB
 	}
 

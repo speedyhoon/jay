@@ -12,215 +12,191 @@ const (
 )
 
 // LenUint ...
-func LenUint(i uint) uint8 {
+func LenUint(u uint) uint8 {
 	switch {
-	case i == 0:
+	case u == 0:
 		return 1
-	case i <= MaxUint8:
+	case u <= MaxUint8:
 		return 2
-	case i <= MaxUint16:
+	case u <= MaxUint16:
 		return 3
-	case i <= MaxUint24:
+	case u <= MaxUint24:
 		return 4
-	case i <= MaxUint32:
+	case u <= MaxUint32:
 		return 5
-	case i <= MaxUint40:
+	case u <= MaxUint40:
 		return 6
-	case i <= MaxUint48:
+	case u <= MaxUint48:
 		return 7
-	case i <= MaxUint56:
+	case u <= MaxUint56:
 		return 8
 	default:
 		return 9
 	}
 }
 
-// WriteUintBytes ...
-func WriteUintBytes(y []byte, u uint, length uint8) {
-	y[0] = length
+// WriteUint ...
+func WriteUint(b []byte, u uint, length uint8) {
+	b[0] = length
 	switch length {
 	// case 1: No further processing required.
 	case 2:
-		y[1] = byte(u)
+		b[1] = byte(u)
 	case 3:
-		y[1] = byte(u)
-		y[2] = byte(u >> 8)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
 	case 4:
-		y[1] = byte(u)
-		y[2] = byte(u >> 8)
-		y[3] = byte(u >> 16)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
 	case 5:
-		y[1] = byte(u)
-		y[2] = byte(u >> 8)
-		y[3] = byte(u >> 16)
-		y[4] = byte(u >> 24)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
 	case 6:
-		y[1] = byte(u)
-		y[2] = byte(u >> 8)
-		y[3] = byte(u >> 16)
-		y[4] = byte(u >> 24)
-		y[5] = byte(u >> 32)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
 	case 7:
-		y[1] = byte(u)
-		y[2] = byte(u >> 8)
-		y[3] = byte(u >> 16)
-		y[4] = byte(u >> 24)
-		y[5] = byte(u >> 32)
-		y[6] = byte(u >> 40)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
+		b[6] = byte(u >> 40)
 	case 8:
-		y[1] = byte(u)
-		y[2] = byte(u >> 8)
-		y[3] = byte(u >> 16)
-		y[4] = byte(u >> 24)
-		y[5] = byte(u >> 32)
-		y[6] = byte(u >> 40)
-		y[7] = byte(u >> 48)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
+		b[6] = byte(u >> 40)
+		b[7] = byte(u >> 48)
 	case 9:
-		y[1] = byte(u)
-		y[2] = byte(u >> 8)
-		y[3] = byte(u >> 16)
-		y[4] = byte(u >> 24)
-		y[5] = byte(u >> 32)
-		y[6] = byte(u >> 40)
-		y[7] = byte(u >> 48)
-		y[8] = byte(u >> 56)
-	}
-}
-
-// WriteUint64Bytes ...
-func WriteUint64Bytes(y []byte, u uint64) {
-	y[0], y[1], y[2], y[3], y[4], y[5], y[6], y[7] = byte(u), byte(u>>8), byte(u>>16), byte(u>>24), byte(u>>32), byte(u>>40), byte(u>>48), byte(u>>56)
-}
-
-// WriteUint32Bytes ...
-func WriteUint32Bytes(y []byte, u uint32) {
-	y[0], y[1], y[2], y[3] = byte(u), byte(u>>8), byte(u>>16), byte(u>>24)
-}
-
-// WriteUint16Bytes ...
-func WriteUint16Bytes(y []byte, u uint16) {
-	y[0], y[1] = byte(u), byte(u>>8)
-}
-
-// WriteUint56Bytes ...
-func WriteUint56Bytes(b []byte, i uint64) {
-	b[0] = byte(i)
-	b[1] = byte(i >> 8)
-	b[2] = byte(i >> 16)
-	b[3] = byte(i >> 24)
-	b[4] = byte(i >> 32)
-	b[5] = byte(i >> 40)
-	b[6] = byte(i >> 48)
-}
-
-// WriteUint48Bytes ...
-func WriteUint48Bytes(b []byte, i uint64) {
-	b[0] = byte(i)
-	b[1] = byte(i >> 8)
-	b[2] = byte(i >> 16)
-	b[3] = byte(i >> 24)
-	b[4] = byte(i >> 32)
-	b[5] = byte(i >> 40)
-}
-
-// WriteUint40Bytes ...
-func WriteUint40Bytes(b []byte, i uint64) {
-	b[0] = byte(i)
-	b[1] = byte(i >> 8)
-	b[2] = byte(i >> 16)
-	b[3] = byte(i >> 24)
-	b[4] = byte(i >> 32)
-}
-
-// WriteUint24Bytes ...
-func WriteUint24Bytes(b []byte, i uint64) {
-	b[0] = byte(i)
-	b[1] = byte(i >> 8)
-	b[2] = byte(i >> 16)
-}
-
-// DEPRECATED
-func LenUintDEPRECATED(i uint) uint8 {
-	switch {
-	case i == 0:
-		return 0
-	case i <= MaxUint8:
-		return 1
-	case i <= MaxUint16:
-		return 2
-	case i <= MaxUint24:
-		return 3
-	case i <= MaxUint32:
-		return 4
-	case i <= MaxUint40:
-		return 5
-	case i <= MaxUint48:
-		return 6
-	case i <= MaxUint56:
-		return 7
-	default:
-		return 8
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
+		b[6] = byte(u >> 40)
+		b[7] = byte(u >> 48)
+		b[8] = byte(u >> 56)
 	}
 }
 
 // DEPRECATED
-func WriteUintBytesDEPRECATED(b []byte, i uint) int {
-	b[0] = LenUintDEPRECATED(i)
+func WriteUintBytesDEPRECATED(b []byte, u uint) int {
+	b[0] = LenUint(u) - 1
 	switch b[0] {
 	default:
 		// Not required, value is zero.
 		return 1
 	case 1:
-		b[1] = byte(i)
+		b[1] = byte(u)
 		return 2
 	case 2:
-		b[1] = byte(i)
-		b[2] = byte(i >> 8)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
 		return 3
 	case 3:
-		b[1] = byte(i)
-		b[2] = byte(i >> 8)
-		b[3] = byte(i >> 16)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
 		return 4
 	case 4:
-		b[1] = byte(i)
-		b[2] = byte(i >> 8)
-		b[3] = byte(i >> 16)
-		b[4] = byte(i >> 24)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
 		return 5
 	case 5:
-		b[1] = byte(i)
-		b[2] = byte(i >> 8)
-		b[3] = byte(i >> 16)
-		b[4] = byte(i >> 24)
-		b[5] = byte(i >> 32)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
 		return 6
 	case 6:
-		b[1] = byte(i)
-		b[2] = byte(i >> 8)
-		b[3] = byte(i >> 16)
-		b[4] = byte(i >> 24)
-		b[5] = byte(i >> 32)
-		b[6] = byte(i >> 40)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
+		b[6] = byte(u >> 40)
 		return 7
 	case 7:
-		b[1] = byte(i)
-		b[2] = byte(i >> 8)
-		b[3] = byte(i >> 16)
-		b[4] = byte(i >> 24)
-		b[5] = byte(i >> 32)
-		b[6] = byte(i >> 40)
-		b[7] = byte(i >> 48)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
+		b[6] = byte(u >> 40)
+		b[7] = byte(u >> 48)
 		return 8
 	case 8:
-		b[1] = byte(i)
-		b[2] = byte(i >> 8)
-		b[3] = byte(i >> 16)
-		b[4] = byte(i >> 24)
-		b[5] = byte(i >> 32)
-		b[6] = byte(i >> 40)
-		b[7] = byte(i >> 48)
-		b[8] = byte(i >> 56)
+		b[1] = byte(u)
+		b[2] = byte(u >> 8)
+		b[3] = byte(u >> 16)
+		b[4] = byte(u >> 24)
+		b[5] = byte(u >> 32)
+		b[6] = byte(u >> 40)
+		b[7] = byte(u >> 48)
+		b[8] = byte(u >> 56)
 		return 9
 	}
+}
+
+// WriteUint64 ...
+func WriteUint64(b []byte, u uint64) {
+	b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7] = byte(u), byte(u>>8), byte(u>>16), byte(u>>24), byte(u>>32), byte(u>>40), byte(u>>48), byte(u>>56)
+}
+
+// WriteUint56 ...
+func WriteUint56(b []byte, u uint64) {
+	b[0] = byte(u)
+	b[1] = byte(u >> 8)
+	b[2] = byte(u >> 16)
+	b[3] = byte(u >> 24)
+	b[4] = byte(u >> 32)
+	b[5] = byte(u >> 40)
+	b[6] = byte(u >> 48)
+}
+
+// WriteUint48 ...
+func WriteUint48(b []byte, u uint64) {
+	b[0] = byte(u)
+	b[1] = byte(u >> 8)
+	b[2] = byte(u >> 16)
+	b[3] = byte(u >> 24)
+	b[4] = byte(u >> 32)
+	b[5] = byte(u >> 40)
+}
+
+// WriteUint40 ...
+func WriteUint40(b []byte, u uint64) {
+	b[0] = byte(u)
+	b[1] = byte(u >> 8)
+	b[2] = byte(u >> 16)
+	b[3] = byte(u >> 24)
+	b[4] = byte(u >> 32)
+}
+
+// WriteUint32 ...
+func WriteUint32(b []byte, u uint32) {
+	b[0], b[1], b[2], b[3] = byte(u), byte(u>>8), byte(u>>16), byte(u>>24)
+}
+
+// WriteUint24 ...
+func WriteUint24(b []byte, u uint64) {
+	b[0] = byte(u)
+	b[1] = byte(u >> 8)
+	b[2] = byte(u >> 16)
+}
+
+// WriteUint16 ...
+func WriteUint16(b []byte, u uint16) {
+	b[0], b[1] = byte(u), byte(u>>8)
 }
