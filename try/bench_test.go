@@ -8,34 +8,33 @@ var car = Car{ID: 42, Auto: true, Name: "Hello", Gearbox: Gearbox{
 	Sequential:   true,
 	Automatic:    false,
 	Model:        "H23w",
-	Manufacturer: "Hewland",
+	Manufacturer: "Zebra",
 }}
-var src []byte
 
 func BenchmarkMarshalJ(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		src = car.MarshalJ()
+		car.MarshalJ()
 	}
 }
 
 func BenchmarkMarshalJBuf(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		src = car.MarshalJ2()
+		car.MarshalJ2()
 	}
 }
 func BenchmarkMarshalJ2(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_ = car.MarshalJ()
+		car.MarshalJ()
 	}
 }
 func BenchmarkMarshalK(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_ = car.MarshalK()
+		car.MarshalK()
 	}
 }
 func BenchmarkMarshalL(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_ = car.MarshalL()
+		car.MarshalL()
 	}
 }
 
