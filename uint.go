@@ -11,6 +11,7 @@ const (
 	//MaxUint64 = 1<<64 - 1 // 18446744073709551615
 )
 
+// LenUint ...
 func LenUint(i uint) uint8 {
 	switch {
 	case i == 0:
@@ -34,6 +35,7 @@ func LenUint(i uint) uint8 {
 	}
 }
 
+// WriteUintBytes ...
 func WriteUintBytes(y []byte, u uint, length uint8) {
 	y[0] = length
 	switch length {
@@ -85,18 +87,22 @@ func WriteUintBytes(y []byte, u uint, length uint8) {
 	}
 }
 
+// WriteUint64Bytes ...
 func WriteUint64Bytes(y []byte, u uint64) {
 	y[0], y[1], y[2], y[3], y[4], y[5], y[6], y[7] = byte(u), byte(u>>8), byte(u>>16), byte(u>>24), byte(u>>32), byte(u>>40), byte(u>>48), byte(u>>56)
 }
 
+// WriteUint32Bytes ...
 func WriteUint32Bytes(y []byte, u uint32) {
 	y[0], y[1], y[2], y[3] = byte(u), byte(u>>8), byte(u>>16), byte(u>>24)
 }
 
+// WriteUint16Bytes ...
 func WriteUint16Bytes(y []byte, u uint16) {
 	y[0], y[1] = byte(u), byte(u>>8)
 }
 
+// WriteUint56Bytes ...
 func WriteUint56Bytes(b []byte, i uint64) {
 	b[0] = byte(i)
 	b[1] = byte(i >> 8)
@@ -107,6 +113,7 @@ func WriteUint56Bytes(b []byte, i uint64) {
 	b[6] = byte(i >> 48)
 }
 
+// WriteUint48Bytes ...
 func WriteUint48Bytes(b []byte, i uint64) {
 	b[0] = byte(i)
 	b[1] = byte(i >> 8)
@@ -115,6 +122,8 @@ func WriteUint48Bytes(b []byte, i uint64) {
 	b[4] = byte(i >> 32)
 	b[5] = byte(i >> 40)
 }
+
+// WriteUint40Bytes ...
 func WriteUint40Bytes(b []byte, i uint64) {
 	b[0] = byte(i)
 	b[1] = byte(i >> 8)
@@ -122,6 +131,8 @@ func WriteUint40Bytes(b []byte, i uint64) {
 	b[3] = byte(i >> 24)
 	b[4] = byte(i >> 32)
 }
+
+// WriteUint24Bytes ...
 func WriteUint24Bytes(b []byte, i uint64) {
 	b[0] = byte(i)
 	b[1] = byte(i >> 8)
