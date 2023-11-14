@@ -176,11 +176,3 @@ func isLenStructVariable(t interface{}) bool {
 	}
 	return false
 }
-
-//func isLenStruct(typ string) bool {
-//	switch typ {
-//	case "struct":
-//		return true
-//	}
-//	return false
-//}
