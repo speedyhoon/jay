@@ -18,7 +18,7 @@ func BenchmarkBuffer(b *testing.B) {
 	log.Println(buf.String())
 }
 
-var buf2 = bytes.NewBuffer(nil)
+//var buf2 = bytes.NewBuffer(nil)
 
 func BenchmarkBuffer2(b *testing.B) {
 	log.SetOutput(io.Discard)

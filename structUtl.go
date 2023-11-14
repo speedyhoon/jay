@@ -30,7 +30,7 @@ func unwrapTagValue(str string) string {
 	return str
 }
 
-func (s Struct) ReceiverName() string {
+func (s *Struct) ReceiverName() string {
 	return string(unicode.ToLower([]rune(s.name)[0]))
 }
 
@@ -159,7 +159,7 @@ func isLenVariable(typ string) bool {
 	return false
 }
 
-func isLenStructVariable(t interface{}) bool {
+/*func isLenStructVariable(t interface{}) bool {
 	switch x := t.(type) {
 	case *ast.Ident:
 		if x.Obj != nil {
@@ -175,4 +175,4 @@ func isLenStructVariable(t interface{}) bool {
 		return isLenStructVariable(x.Fields.List)
 	}
 	return false
-}
+}*/

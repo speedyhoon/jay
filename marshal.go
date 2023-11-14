@@ -9,7 +9,7 @@ import (
 )
 
 // MakeMarshalJ ...
-func (s Struct) MakeMarshalJ(b *bytes.Buffer) {
+func (s *Struct) MakeMarshalJ(b *bytes.Buffer) {
 	b.WriteString(fmt.Sprintf(
 		`func (%s *%s) MarshalJ() (b []byte) {
 	b = make([]byte, %[1]s.SizeJ())
@@ -23,7 +23,7 @@ func (s Struct) MakeMarshalJ(b *bytes.Buffer) {
 }
 
 // MakeMarshalJTo ...
-func (s Struct) MakeMarshalJTo(b *bytes.Buffer) {
+func (s *Struct) MakeMarshalJTo(b *bytes.Buffer) {
 	receiver := s.ReceiverName()
 	b.WriteString(fmt.Sprintf(
 		"func (%s *%s) MarshalJTo(b []byte) {\n",
@@ -86,12 +86,7 @@ func generateLine(f field, index *uint, receiver, at string /*, isLast bool*/) s
 	case "bool", "byte", "int8", "uint8":
 		return fmt.Sprintf("b[%d]=%s", start, marshalFunc(f.typ, thisField))
 	case "uint64":
-		/*buffer := "b"
-		if start >= 1 {
-			buffer = fmt.Sprintf("b[%d:]", start)
-			//return /*fmt.Sprintf("%s(b, %s.%s)",* / marshalFunc(f.typ, thisField, "b") /*, receiver, f.name)* /
-		}*/
-		return /*fmt.Sprintf("%s(b[%d:], %s.%s)",*/ marshalFunc(f.typ, thisField, buffer /*, receiver, f.name*/)
+		return marshalFunc(f.typ, thisField, buffer)
 	case "string":
 		//if !isLast {
 		// TODO thisField should == b[1:]
@@ -104,10 +99,6 @@ func generateLine(f field, index *uint, receiver, at string /*, isLast bool*/) s
 		return fmt.Sprintf("%s.MarshalJTo(%s)", thisField, buffer)
 
 	case "int":
-		//buffer := "b"
-		//if start >= 1 {
-		//	buffer = fmt.Sprintf("b[%d:]", start)
-		//}
 		return marshalFunc(f.typ, thisField, buffer)
 	default:
 		log.Printf("no generateLine for type `%s` yet", f.typ)
@@ -115,17 +106,16 @@ func generateLine(f field, index *uint, receiver, at string /*, isLast bool*/) s
 	return ""
 }
 
-func lookupMarshaler(f *field) bool {
+/*func lookupMarshaller(f *field) bool {
 	switch f.typ {
 	case "uint64":
 		marshalU64(f)
 		return true
 	}
 	return false
-}
+}*/
 
 func marshalU64(f *field) (fun string, sizeOf uint, ok bool) {
-	//f.LoadTagOptions()
 	if f.Options.maxBytes != 0 {
 		return fmt.Sprintf("WriteUint%dBytes", f.Options.maxBytes*8), f.Options.maxBytes, true
 	}
@@ -139,7 +129,6 @@ func (f *field) LoadTagOptions() {
 	}
 	for _, c := range strings.Split(f.tag, ",") {
 		d := strings.Split(c, ":")
-		//for j, d := range strings.Split(c, ":") {
 		switch g := d[0]; g {
 		case max:
 			loadUint(d[1], &f.Options.Max)
@@ -147,7 +136,6 @@ func (f *field) LoadTagOptions() {
 		case min:
 			loadUint(g, &f.Options.Min)
 		}
-		//}
 	}
 }
 

@@ -39,13 +39,14 @@ func BenchmarkMarshalL(b *testing.B) {
 	}
 }
 
-var ll int
+//var ll int
 
-func BenchmarkLen(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ll = len(src)
-	}
-}
+//func BenchmarkLen(b *testing.B) {
+//	for i := 0; i < b.N; i++ {
+//		ll = len(src)
+//	}
+//}
+
 func BenchmarkFastest(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Fastest(i)

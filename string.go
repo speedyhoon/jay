@@ -77,7 +77,7 @@ func ReadStringPtr(b []byte, h *string) (size int, _ bool) {
 }
 
 // Deprecated
-func WriteString_old(b []byte, index int, s *string) int {
+func WriteStringOld(b []byte, index int, s *string) int {
 	l := len(*s)
 	b[index] = byte(l) // Set how long the string is
 	index++
