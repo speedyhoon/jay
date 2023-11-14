@@ -136,11 +136,11 @@ func (c *Car) MarshalJ2() (b []byte) {
 func (c *Car) MarshalJTo(b []byte) {
 	jay.WriteUint64(b[:8], c.ID)
 	b[8] = jay.Bool1(c.Auto)
-	at := 9 + jay.WriteUintBytesDEPRECATED(b[9:18], c.Row)
+	at := 9 + jay.WriteUintDEPRECATED(b[9:18], c.Row)
 	at += jay.WriteString(b[17:], c.Name)
 	at += jay.WriteString(b[at:], c.CC)
 	at += jay.WriteString(b[at:], c.Timing)
-	//c.Gearbox.MarshalJTo(b[at:])
+	c.Gearbox.MarshalJTo(b[at:])
 }
 
 func (c *Car) SizeJ() int {
